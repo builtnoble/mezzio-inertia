@@ -10,7 +10,12 @@
         }
     ],
     "require": {
-        "php": "^8.5"
+        "php": "^8.5",
+        "builtnoble/vite-php": "^0.1.0",
+        "maskulabs/inertia-psr": "^3.0",
+        "mezzio/mezzio-session": "^1.17",
+        "mezzio/mezzio-template": "^3.0",
+        "psr/http-factory": "^1.1"
     },
     "require-dev": {
         "laravel/pint": "^1.29",
