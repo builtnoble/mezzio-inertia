@@ -14,7 +14,7 @@
 * **Quality Tools:** PestPHP, PHPStan (Level 8), Laravel Pint (with `psr12` preset and additional rules, see: `pint.json`)
 
 ## Testing
-* **Test Helpers & Expectations:** Pest helpers and expectations for Feature/Integration tests live in `src/Testing/`. Do not write or modify files in this directory — the package author maintains them.
+* **Test Helpers & Expectations:** Pest helpers and expectations for Feature/Integration tests live in `src/Testing/`. Do not write or modify files in this directory — the package author maintains them. All standard quality tools (PHPStan, Pint) apply to this directory.
 
 ## Architecture & Integration Rules
 1. **Bridge, Don't Re-invent:** Delegate all core Inertia lifecycle logic to `maskulabs/inertia-psr`. Focus entirely on writing Mezzio PSR-11 factories and PSR-15 middleware layers.
