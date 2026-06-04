@@ -4,7 +4,7 @@
         "align_multiline_comment": true,
         "array_syntax": true,
         "return_type_declaration": {
-            "space_before": "one"
+            "space_before": "none"
         },
         "assign_null_coalescing_to_coalesce_equal": true,
         "cast_spaces": true,
@@ -30,6 +30,7 @@
         "linebreak_after_opening_tag": true,
         "magic_constant_casing": true,
         "magic_method_casing": true,
+        "method_argument_space": false,
         "multiline_comment_opening_closing": true,
         "multiline_promoted_properties": true,
         "multiline_whitespace_before_semicolons": {
@@ -101,8 +102,6 @@
         "ternary_to_null_coalescing": true,
         "switch_continue_to_break": true,
         "trailing_comma_in_multiline": true,
-        "type_declaration_spaces": true,
-        "types_spaces": true,
         "yoda_style": {
             "equal": false,
             "identical": false
