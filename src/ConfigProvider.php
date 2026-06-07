@@ -18,7 +18,7 @@ final readonly class ConfigProvider
     public function __invoke(): array
     {
         return [
-            'inertia'      => $this->getDefaultConfig(),
+            'inertia' => $this->getDefaultConfig(),
             'dependencies' => $this->getDependencies(),
         ];
     }
@@ -31,7 +31,7 @@ final readonly class ConfigProvider
     public function getDefaultConfig(): array
     {
         return [
-            'root_view'   => 'app',
+            'root_view' => 'app',
             'shared_data' => [],
         ];
     }
@@ -46,7 +46,7 @@ final readonly class ConfigProvider
         return [
             'factories' => [
                 \MaskuLabs\InertiaPsr\Response\StreamFactoryInterface::class => TemplateStreamAdapterFactory::class,
-                InertiaMiddleware::class                                      => InertiaMiddlewareFactory::class,
+                InertiaMiddleware::class => InertiaMiddlewareFactory::class,
             ],
         ];
     }
