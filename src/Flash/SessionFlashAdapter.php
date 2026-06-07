@@ -10,10 +10,10 @@ use Mezzio\Session\RetrieveSession;
 use Mezzio\Session\SessionInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class SessionFlashAdapter implements FlashInterface
+final readonly class SessionFlashAdapter implements FlashInterface
 {
     public function __construct(
-        private readonly SessionInterface $session
+        private SessionInterface $session
     ) {}
 
     public static function fromRequest(ServerRequestInterface $request): self
@@ -37,5 +37,6 @@ final class SessionFlashAdapter implements FlashInterface
         $this->session->set($key, $value);
     }
 
+    // Mezzio session data persists until explicitly unset, so no action is needed to keep flash alive for the next request.
     public function reflash(): void {}
 }
