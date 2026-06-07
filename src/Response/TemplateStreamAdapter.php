@@ -9,7 +9,6 @@ use MaskuLabs\InertiaPsr\Helper\RequestHelper;
 use MaskuLabs\InertiaPsr\Response\StreamFactoryInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\StreamFactoryInterface as PsrStreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use InvalidArgumentException;
 
@@ -18,7 +17,7 @@ final readonly class TemplateStreamAdapter implements StreamFactoryInterface
     public function __construct(
         private TemplateRendererInterface $renderer,
         private ViteInterface $vite,
-        private PsrStreamFactoryInterface $streamFactory,
+        private \Psr\Http\Message\StreamFactoryInterface $streamFactory,
     ) {}
 
     /**
@@ -29,7 +28,7 @@ final readonly class TemplateStreamAdapter implements StreamFactoryInterface
     {
         if (RequestHelper::isInertia($request)) {
             return $this->streamFactory->createStream(
-                json_encode($pageData, \JSON_THROW_ON_ERROR | \JSON_UNESCAPED_SLASHES | \JSON_UNESCAPED_UNICODE),
+                json_encode($pageData, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
             );
         }
 
@@ -37,7 +36,11 @@ final readonly class TemplateStreamAdapter implements StreamFactoryInterface
             throw new InvalidArgumentException('Root view template name must not be empty.');
         }
 
-        $html = $this->renderer->render($rootView, ['page' => $pageData, 'vite' => $this->vite, ...$viewData]);
+        $html = $this->renderer->render($rootView, [
+            'page' => $pageData,
+            'vite' => $this->vite,
+            ...$viewData,
+        ]);
 
         return $this->streamFactory->createStream($html);
     }

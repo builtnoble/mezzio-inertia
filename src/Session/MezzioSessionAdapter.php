@@ -6,13 +6,12 @@ namespace Builtnoble\Mezzio\Inertia\Session;
 
 use MaskuLabs\InertiaPsr\Session\SessionInterface;
 use Mezzio\Session\RetrieveSession;
-use Mezzio\Session\SessionInterface as MezzioSession;
 use Psr\Http\Message\ServerRequestInterface;
 
 final readonly class MezzioSessionAdapter implements SessionInterface
 {
     public function __construct(
-        private MezzioSession $session
+        private \Mezzio\Session\SessionInterface $session
     ) {}
 
     public static function fromRequest(ServerRequestInterface $request): self

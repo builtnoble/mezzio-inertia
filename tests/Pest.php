@@ -1,3 +1,5 @@
 <?php
 
-pest()->extend(\Builtnoble\Mezzio\Inertia\Tests\TestCase::class)->in('Feature');
+use Builtnoble\Mezzio\Inertia\Tests;
+
+pest()->extend(Tests\TestCase::class)->in('Feature');
