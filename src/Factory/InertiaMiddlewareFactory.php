@@ -6,7 +6,9 @@ namespace Builtnoble\Mezzio\Inertia\Factory;
 
 use Builtnoble\Mezzio\Inertia\ConfigProvider;
 use Builtnoble\Mezzio\Inertia\Middleware\InertiaMiddleware;
+use MaskuLabs\InertiaPsr\Response\StreamFactoryInterface;
 use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 
 final readonly class InertiaMiddlewareFactory
 {
@@ -16,8 +18,8 @@ final readonly class InertiaMiddlewareFactory
         $config = $container->get('config');
 
         return new InertiaMiddleware(
-            $container->get(\Psr\Http\Message\ResponseFactoryInterface::class),
-            $container->get(\MaskuLabs\InertiaPsr\Response\StreamFactoryInterface::class),
+            $container->get(ResponseFactoryInterface::class),
+            $container->get(StreamFactoryInterface::class),
             $config['inertia'] ?? new ConfigProvider()->getDefaultConfig(),
             $container,
         );
