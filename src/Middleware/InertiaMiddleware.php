@@ -6,44 +6,62 @@ namespace Builtnoble\Mezzio\Inertia\Middleware;
 
 use Builtnoble\Mezzio\Inertia\Flash\SessionFlashAdapter;
 use Builtnoble\Mezzio\Inertia\Session\MezzioSessionAdapter;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
+use MaskuLabs\InertiaPsr\Flash\Flash;
+use MaskuLabs\InertiaPsr\Inertia;
+use MaskuLabs\InertiaPsr\Middleware\Middleware;
+use MaskuLabs\InertiaPsr\Property\ProvidesInertiaPropertiesInterface;
+use MaskuLabs\InertiaPsr\Response\ResponseFactory;
+use MaskuLabs\InertiaPsr\Response\StreamFactoryInterface;
+use MaskuLabs\InertiaPsr\Service\CallableResolver\CallableResolver;
+use MaskuLabs\InertiaPsr\Service\CustomPropResolver\CustomPropResolver;
+use MaskuLabs\InertiaPsr\Service\FlashResolver\FlashResolver;
+use MaskuLabs\InertiaPsr\Service\PageResolver\PageResolver;
+use MaskuLabs\InertiaPsr\Service\PropsResolver\PropsResolver;
+use Yiisoft\Arrays\ArrayableInterface;
 
 final class InertiaMiddleware implements MiddlewareInterface
 {
-    /** @param InertiaConfig $config */
+    /**
+     * @param array<string, mixed> $config
+     *
+     * @phpstan-param InertiaConfig $config
+     */
     public function __construct(
-        private readonly \Psr\Http\Message\ResponseFactoryInterface $psrResponseFactory,
-        private readonly \MaskuLabs\InertiaPsr\Response\StreamFactoryInterface $streamFactory,
+        private readonly ResponseFactoryInterface $psrResponseFactory,
+        private readonly StreamFactoryInterface $streamFactory,
         private readonly array $config,
-        private readonly \Psr\Container\ContainerInterface $container,
+        private readonly ContainerInterface $container,
     ) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $session      = MezzioSessionAdapter::fromRequest($request);
+        $session = MezzioSessionAdapter::fromRequest($request);
         $flashAdapter = SessionFlashAdapter::fromRequest($request);
-        $flash        = new \MaskuLabs\InertiaPsr\Flash\Flash($flashAdapter);
+        $flash = new Flash($flashAdapter);
 
-        $callableResolver   = new \MaskuLabs\InertiaPsr\Service\CallableResolver\CallableResolver();
-        $customPropResolver = new \MaskuLabs\InertiaPsr\Service\CustomPropResolver\CustomPropResolver($callableResolver);
-        $propsResolver      = new \MaskuLabs\InertiaPsr\Service\PropsResolver\PropsResolver(
+        $callableResolver = new CallableResolver();
+        $customPropResolver = new CustomPropResolver($callableResolver);
+        $propsResolver = new PropsResolver(
             $callableResolver,
             $customPropResolver,
         );
-        $flashResolver = new \MaskuLabs\InertiaPsr\Service\FlashResolver\FlashResolver($flash);
-        $pageResolver  = new \MaskuLabs\InertiaPsr\Service\PageResolver\PageResolver($propsResolver, $flashResolver);
+        $flashResolver = new FlashResolver($flash);
+        $pageResolver = new PageResolver($propsResolver, $flashResolver);
 
-        $responseFactory = new \MaskuLabs\InertiaPsr\Response\ResponseFactory(
+        $responseFactory = new ResponseFactory(
             $this->psrResponseFactory,
             $this->streamFactory,
             $pageResolver,
             $flash,
         );
 
-        $inertia = new \MaskuLabs\InertiaPsr\Inertia(
+        $inertia = new Inertia(
             $request,
             $this->psrResponseFactory,
             $responseFactory,
@@ -58,8 +76,7 @@ final class InertiaMiddleware implements MiddlewareInterface
             if (is_int($key) && is_string($value)) {
                 $provider = $this->container->get($value);
 
-                if ($provider instanceof \MaskuLabs\InertiaPsr\Property\ProvidesInertiaPropertiesInterface
-                    || $provider instanceof \Yiisoft\Arrays\ArrayableInterface) {
+                if ($provider instanceof ProvidesInertiaPropertiesInterface || $provider instanceof ArrayableInterface) {
                     $inertia->share($provider);
                 } elseif (is_callable($provider)) {
                     $inertia->share(($provider)($request));
@@ -69,7 +86,7 @@ final class InertiaMiddleware implements MiddlewareInterface
             }
         }
 
-        return new \MaskuLabs\InertiaPsr\Middleware\Middleware(
+        return new Middleware(
             $inertia,
             $this->psrResponseFactory,
             $flashAdapter,
