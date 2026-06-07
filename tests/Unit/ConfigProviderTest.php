@@ -24,5 +24,10 @@ it('registers TemplateStreamAdapterFactory under StreamFactoryInterface', functi
 
 test('getDefaultConfig returns default root_view independently', function () {
     expect(new ConfigProvider()->getDefaultConfig())
-        ->toBe(['root_view' => 'app']);
+        ->toBe(['root_view' => 'app', 'shared_data' => []]);
+});
+
+it('includes shared_data in default config', function () {
+    expect(new ConfigProvider()->getDefaultConfig())
+        ->toHaveKey('shared_data', []);
 });

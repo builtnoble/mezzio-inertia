@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Builtnoble\Mezzio\Inertia;
 
+use Builtnoble\Mezzio\Inertia\Factory\InertiaMiddlewareFactory;
 use Builtnoble\Mezzio\Inertia\Factory\TemplateStreamAdapterFactory;
+use Builtnoble\Mezzio\Inertia\Middleware\InertiaMiddleware;
 
 final readonly class ConfigProvider
 {
@@ -29,7 +31,8 @@ final readonly class ConfigProvider
     public function getDefaultConfig(): array
     {
         return [
-            'root_view' => 'app',
+            'root_view'   => 'app',
+            'shared_data' => [],
         ];
     }
 
@@ -43,6 +46,7 @@ final readonly class ConfigProvider
         return [
             'factories' => [
                 \MaskuLabs\InertiaPsr\Response\StreamFactoryInterface::class => TemplateStreamAdapterFactory::class,
+                InertiaMiddleware::class                                      => InertiaMiddlewareFactory::class,
             ],
         ];
     }
