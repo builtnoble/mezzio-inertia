@@ -41,6 +41,11 @@
             "phpstan/extension-installer": true
         }
     },
+    "extra": {
+        "laminas": {
+            "config-provider": "Builtnoble\\Mezzio\\Inertia\\ConfigProvider"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }

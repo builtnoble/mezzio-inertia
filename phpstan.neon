@@ -2,3 +2,6 @@ parameters:
     level: 8
     paths:
         - src
+    typeAliases:
+        InertiaConfig: 'array{root_view: string}'
+        DependenciesConfig: 'array{factories: array<class-string, class-string>}'
