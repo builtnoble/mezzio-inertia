@@ -28,9 +28,7 @@ use Yiisoft\Arrays\ArrayableInterface;
 final class InertiaMiddleware implements MiddlewareInterface
 {
     /**
-     * @param array<string, mixed> $config
-     *
-     * @phpstan-param InertiaConfig $config
+     * @param InertiaConfig $config
      */
     public function __construct(
         private readonly ResponseFactoryInterface $psrResponseFactory,
