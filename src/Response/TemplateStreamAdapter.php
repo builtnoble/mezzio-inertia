@@ -10,7 +10,6 @@ use MaskuLabs\InertiaPsr\Response\StreamFactoryInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
-use InvalidArgumentException;
 
 final readonly class TemplateStreamAdapter implements StreamFactoryInterface
 {
@@ -33,7 +32,7 @@ final readonly class TemplateStreamAdapter implements StreamFactoryInterface
         }
 
         if ($rootView === '') {
-            throw new InvalidArgumentException('Root view template name must not be empty.');
+            throw new \InvalidArgumentException('Root view template name must not be empty.');
         }
 
         $html = $this->renderer->render($rootView, [

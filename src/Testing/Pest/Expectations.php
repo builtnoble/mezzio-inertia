@@ -6,7 +6,6 @@ namespace Builtnoble\Mezzio\Inertia\Testing\Pest;
 
 use Pest\Expectation;
 use Psr\Http\Message\ResponseInterface;
-use LogicException;
 
 /**
  * @param Expectation<mixed> $expectation
@@ -16,7 +15,7 @@ function getTestableResponse(Expectation $expectation): ResponseInterface
     $response = $expectation->value;
 
     if (! $response instanceof ResponseInterface) {
-        throw new LogicException('Expected response expectation to contain a ResponseInterface.');
+        throw new \LogicException('Expected response expectation to contain a ResponseInterface.');
     }
 
     return $response;

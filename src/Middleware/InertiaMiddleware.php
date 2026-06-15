@@ -6,12 +6,6 @@ namespace Builtnoble\Mezzio\Inertia\Middleware;
 
 use Builtnoble\Mezzio\Inertia\Flash\SessionFlashAdapter;
 use Builtnoble\Mezzio\Inertia\Session\MezzioSessionAdapter;
-use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Server\RequestHandlerInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use MaskuLabs\InertiaPsr\Flash\Flash;
 use MaskuLabs\InertiaPsr\Inertia;
 use MaskuLabs\InertiaPsr\Middleware\Middleware;
@@ -23,6 +17,12 @@ use MaskuLabs\InertiaPsr\Service\CustomPropResolver\CustomPropResolver;
 use MaskuLabs\InertiaPsr\Service\FlashResolver\FlashResolver;
 use MaskuLabs\InertiaPsr\Service\PageResolver\PageResolver;
 use MaskuLabs\InertiaPsr\Service\PropsResolver\PropsResolver;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Arrays\ArrayableInterface;
 
 final class InertiaMiddleware implements MiddlewareInterface

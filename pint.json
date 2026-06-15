@@ -23,7 +23,9 @@
             "leading_backslash_in_global_namespace": true
         },
         "global_namespace_import": {
-            "import_classes": true
+            "import_classes": false,
+            "import_constants": false,
+            "import_functions": false
         },
         "heredoc_indentation": true,
         "include": true,
@@ -65,6 +67,10 @@
         "object_operator_without_whitespace": true,
         "octal_notation": true,
         "ordered_attributes": true,
+        "ordered_imports": {
+            "sort_algorithm": "alpha",
+            "imports_order": ["const", "class", "function"]
+        },
         "ordered_interfaces": true,
         "ordered_types": true,
         "phpdoc_align": {
