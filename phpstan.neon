@@ -5,3 +5,7 @@ parameters:
     typeAliases:
         InertiaConfig: 'array{root_view: string, shared_data: array<array-key, array<string, mixed>|class-string>}'
         DependenciesConfig: 'array{factories: array<class-string, class-string>}'
+    peststan:
+        testCaseClass: Builtnoble\Mezzio\Inertia\Testing\TestCase
+        pestConfigFiles:
+            - tests/Pest.php
