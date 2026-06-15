@@ -10,4 +10,6 @@ it('normalizes path string', function (string $input, string $output) {
     'outer right slash' => ['dir/subdir/filename.ext/', 'dir/subdir/filename.ext'],
     'outer slashes' => ['/dir/subdir/filename.ext/', 'dir/subdir/filename.ext'],
     'only a slash' => ['/', ''],
+    'vfs uri scheme' => ['vfs://root/config/container.php', 'vfs://root/config/container.php'],
+    'vfs duplicate slashes in path' => ['vfs://root//config//container.php', 'vfs://root/config/container.php'],
 ]);
