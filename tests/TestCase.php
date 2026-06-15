@@ -2,6 +2,6 @@
 
 namespace Builtnoble\Mezzio\Inertia\Tests;
 
-use PHPUnit\Framework\TestCase as BaseTestCase;
+use Builtnoble\Mezzio\Inertia\Testing;
 
-abstract class TestCase extends BaseTestCase {}
+abstract class TestCase extends Testing\TestCase {}
