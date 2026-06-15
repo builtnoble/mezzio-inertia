@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f57d4bde522b9135bc1eed0909c9513",
+    "content-hash": "4892afd60f5a61c16955ae5ee658f8de",
     "packages": [
         {
             "name": "builtnoble/vite-php",
@@ -1154,6 +1154,62 @@
             "time": "2025-08-14T07:29:31+00:00"
         },
         {
+            "name": "fig/http-message-util",
+            "version": "1.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-message-util.git",
+                "reference": "9d94dc0154230ac39e5bf89398b324a86f63f765"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-message-util/zipball/9d94dc0154230ac39e5bf89398b324a86f63f765",
+                "reference": "9d94dc0154230ac39e5bf89398b324a86f63f765",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3 || ^7.0 || ^8.0"
+            },
+            "suggest": {
+                "psr/http-message": "The package containing the PSR-7 interfaces"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Fig\\Http\\Message\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "https://www.php-fig.org/"
+                }
+            ],
+            "description": "Utility classes and constants for use with PSR-7 (psr/http-message)",
+            "keywords": [
+                "http",
+                "http-message",
+                "psr",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/http-message-util/issues",
+                "source": "https://github.com/php-fig/http-message-util/tree/1.1.5"
+            },
+            "time": "2020-11-24T22:02:12+00:00"
+        },
+        {
             "name": "filp/whoops",
             "version": "2.18.4",
             "source": {
@@ -1373,6 +1429,212 @@
             "time": "2025-10-12T15:31:36+00:00"
         },
         {
+            "name": "laminas/laminas-escaper",
+            "version": "2.18.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-escaper.git",
+                "reference": "06f211dfffff18d91844c1f55250d5d13c007e18"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-escaper/zipball/06f211dfffff18d91844c1f55250d5d13c007e18",
+                "reference": "06f211dfffff18d91844c1f55250d5d13c007e18",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-mbstring": "*",
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
+            },
+            "conflict": {
+                "zendframework/zend-escaper": "*"
+            },
+            "require-dev": {
+                "infection/infection": "^0.31.0",
+                "laminas/laminas-coding-standard": "~3.1.0",
+                "phpunit/phpunit": "^11.5.42",
+                "psalm/plugin-phpunit": "^0.19.5",
+                "vimeo/psalm": "^6.13.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Escaper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Securely and safely escape HTML, HTML attributes, JavaScript, CSS, and URLs",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "escaper",
+                "laminas"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-escaper/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-escaper/issues",
+                "rss": "https://github.com/laminas/laminas-escaper/releases.atom",
+                "source": "https://github.com/laminas/laminas-escaper"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2025-10-14T18:31:13+00:00"
+        },
+        {
+            "name": "laminas/laminas-httphandlerrunner",
+            "version": "2.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-httphandlerrunner.git",
+                "reference": "181eaeeb838ad3d80fbbcfb0657a46bc212bbd4e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-httphandlerrunner/zipball/181eaeeb838ad3d80fbbcfb0657a46bc212bbd4e",
+                "reference": "181eaeeb838ad3d80fbbcfb0657a46bc212bbd4e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+                "psr/http-message": "^1.0 || ^2.0",
+                "psr/http-message-implementation": "^1.0 || ^2.0",
+                "psr/http-server-handler": "^1.0"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~3.1.0",
+                "laminas/laminas-diactoros": "^3.6.0",
+                "phpunit/phpunit": "^10.5.46",
+                "psalm/plugin-phpunit": "^0.19.5",
+                "vimeo/psalm": "^6.10.3"
+            },
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "config-provider": "Laminas\\HttpHandlerRunner\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\HttpHandlerRunner\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Execute PSR-15 RequestHandlerInterface instances and emit responses they generate.",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "components",
+                "laminas",
+                "mezzio",
+                "psr-15",
+                "psr-7"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-httphandlerrunner/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-httphandlerrunner/issues",
+                "rss": "https://github.com/laminas/laminas-httphandlerrunner/releases.atom",
+                "source": "https://github.com/laminas/laminas-httphandlerrunner"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2025-10-12T20:58:29+00:00"
+        },
+        {
+            "name": "laminas/laminas-stratigility",
+            "version": "4.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-stratigility.git",
+                "reference": "32be07e85cff5a3ba97ba14ff57ead04eade4051"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-stratigility/zipball/32be07e85cff5a3ba97ba14ff57ead04eade4051",
+                "reference": "32be07e85cff5a3ba97ba14ff57ead04eade4051",
+                "shasum": ""
+            },
+            "require": {
+                "fig/http-message-util": "^1.1",
+                "laminas/laminas-escaper": "^2.10.0",
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+                "psr/http-factory": "^1.0.2",
+                "psr/http-message": "^1.0 || ^2.0",
+                "psr/http-server-middleware": "^1.0.2"
+            },
+            "conflict": {
+                "zendframework/zend-stratigility": "*"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~3.1.0",
+                "laminas/laminas-diactoros": "^2.25 || ^3.8.0",
+                "phpunit/phpunit": "^11.5.42",
+                "psalm/plugin-phpunit": "^0.19.5",
+                "vimeo/psalm": "^6.13.1"
+            },
+            "suggest": {
+                "psr/http-factory-implementation": "Please install a psr/http-factory implementation to consume Stratigility; e.g., laminas/laminas-diactoros",
+                "psr/http-message-implementation": "Please install a psr/http-message implementation to consume Stratigility; e.g., laminas/laminas-diactoros"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions/double-pass-middleware.php",
+                    "src/functions/host.php",
+                    "src/functions/middleware.php",
+                    "src/functions/path.php"
+                ],
+                "psr-4": {
+                    "Laminas\\Stratigility\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "PSR-7 middleware foundation for building and dispatching middleware pipelines",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "http",
+                "laminas",
+                "middleware",
+                "psr-15",
+                "psr-17",
+                "psr-7"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.laminas.dev/laminas-stratigility/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/laminas/laminas-stratigility/issues",
+                "rss": "https://github.com/laminas/laminas-stratigility/releases.atom",
+                "source": "https://github.com/laminas/laminas-stratigility"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2026-05-03T18:04:42+00:00"
+        },
+        {
             "name": "laravel/pint",
             "version": "v1.29.1",
             "source": {
@@ -1439,6 +1701,256 @@
                 "source": "https://github.com/laravel/pint"
             },
             "time": "2026-04-20T15:26:14+00:00"
+        },
+        {
+            "name": "mezzio/mezzio",
+            "version": "3.28.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mezzio/mezzio.git",
+                "reference": "b67f3f4a090d444e94e1ef3c49085b8e313ad501"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mezzio/mezzio/zipball/b67f3f4a090d444e94e1ef3c49085b8e313ad501",
+                "reference": "b67f3f4a090d444e94e1ef3c49085b8e313ad501",
+                "shasum": ""
+            },
+            "require": {
+                "fig/http-message-util": "^1.1.5",
+                "laminas/laminas-httphandlerrunner": "^2.1",
+                "laminas/laminas-stratigility": "^4.3",
+                "mezzio/mezzio-router": "^3.15.0 || ^4.0.0",
+                "mezzio/mezzio-template": "^2.2 || ^3.0",
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+                "psr/container": "^1.0||^2.0",
+                "psr/http-factory": "^1.0",
+                "psr/http-message": "^1.0.1 || ^2.0.0",
+                "psr/http-server-middleware": "^1.0",
+                "webmozart/assert": "^1.11.0 || ^2.0.0"
+            },
+            "conflict": {
+                "container-interop/container-interop": "<1.2.0",
+                "filp/whoops": "<2.14.4",
+                "laminas/laminas-diactoros": "<1.7.1",
+                "laminas/laminas-http": "<2.15.0",
+                "laminas/laminas-router": "<3.5.0",
+                "laminas/laminas-stdlib": "<3.6.0",
+                "zendframework/zend-expressive": "*"
+            },
+            "require-dev": {
+                "filp/whoops": "^2.18.4",
+                "laminas/laminas-coding-standard": "^3.1.0",
+                "laminas/laminas-diactoros": "^3.8.0",
+                "laminas/laminas-servicemanager": "^3.24.0",
+                "mezzio/mezzio-fastroute": "^3.14",
+                "mezzio/mezzio-laminasrouter": "^3.12",
+                "phpunit/phpunit": "^11.5.44",
+                "psalm/plugin-phpunit": "^0.19.5",
+                "vimeo/psalm": "^6.13.1"
+            },
+            "suggest": {
+                "filp/whoops": "^2.1 to use the Whoops error handler",
+                "laminas/laminas-auradi-config": "^2.0 to use Aura.Di dependency injection container",
+                "laminas/laminas-pimple-config": "^1.0 to use Pimple for dependency injection container",
+                "laminas/laminas-servicemanager": "^3.3 to use laminas-servicemanager for dependency injection",
+                "mezzio/mezzio-helpers": "^3.0 for its UrlHelper, ServerUrlHelper, and BodyParseMiddleware",
+                "mezzio/mezzio-tooling": "^1.0 for migration and development tools; require it with the --dev flag",
+                "psr/http-message-implementation": "Please install a psr/http-message-implementation to consume Mezzio; e.g., laminas/laminas-diactoros"
+            },
+            "bin": [
+                "bin/mezzio-tooling"
+            ],
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "config-provider": "Mezzio\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/constants.php",
+                    "src/constants.legacy.php"
+                ],
+                "psr-4": {
+                    "Mezzio\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "PSR-15 Middleware Microframework",
+            "homepage": "https://mezzio.dev",
+            "keywords": [
+                "PSR-11",
+                "http",
+                "laminas",
+                "mezzio",
+                "middleware",
+                "psr",
+                "psr-15",
+                "psr-7"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.mezzio.dev/mezzio/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/mezzio/mezzio/issues",
+                "rss": "https://github.com/mezzio/mezzio/releases.atom",
+                "source": "https://github.com/mezzio/mezzio"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2026-06-10T09:37:33+00:00"
+        },
+        {
+            "name": "mezzio/mezzio-router",
+            "version": "4.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mezzio/mezzio-router.git",
+                "reference": "e7a6505d7e460ce30c4135e146241d7d24d81c27"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mezzio/mezzio-router/zipball/e7a6505d7e460ce30c4135e146241d7d24d81c27",
+                "reference": "e7a6505d7e460ce30c4135e146241d7d24d81c27",
+                "shasum": ""
+            },
+            "require": {
+                "fig/http-message-util": "^1.1.5",
+                "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+                "psr/container": "^1.1.2 || ^2.0",
+                "psr/http-factory": "^1.0.2",
+                "psr/http-message": "^1.0.1 || ^2.0.0",
+                "psr/http-server-middleware": "^1.0.2",
+                "webmozart/assert": "^1.11.0 || ^2.1.1"
+            },
+            "conflict": {
+                "mezzio/mezzio": "<3.5",
+                "zendframework/zend-expressive-router": "*"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~3.1.0",
+                "laminas/laminas-diactoros": "^3.6.0",
+                "laminas/laminas-servicemanager": "^4.4.0",
+                "laminas/laminas-stratigility": "^4.2.0",
+                "phpunit/phpunit": "^11.5.42",
+                "psalm/plugin-phpunit": "^0.19.5",
+                "vimeo/psalm": "^6.13.1"
+            },
+            "suggest": {
+                "mezzio/mezzio-fastroute": "^3.0 to use the FastRoute routing adapter",
+                "mezzio/mezzio-laminasrouter": "^3.0 to use the laminas-router routing adapter"
+            },
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "config-provider": "Mezzio\\Router\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mezzio\\Router\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Router subcomponent for Mezzio",
+            "homepage": "https://mezzio.dev",
+            "keywords": [
+                "http",
+                "laminas",
+                "mezzio",
+                "middleware",
+                "psr",
+                "psr-7"
+            ],
+            "support": {
+                "chat": "https://laminas.dev/chat",
+                "docs": "https://docs.mezzio.dev/mezzio/features/router/intro/",
+                "forum": "https://discourse.laminas.dev",
+                "issues": "https://github.com/mezzio/mezzio-router/issues",
+                "rss": "https://github.com/mezzio/mezzio-router/releases.atom",
+                "source": "https://github.com/mezzio/mezzio-router"
+            },
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2026-01-09T11:44:24+00:00"
+        },
+        {
+            "name": "mrpunyapal/peststan",
+            "version": "0.2.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MrPunyapal/PestStan.git",
+                "reference": "750859a911050915cb6e3efbfde30e900ad717bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MrPunyapal/PestStan/zipball/750859a911050915cb6e3efbfde30e900ad717bf",
+                "reference": "750859a911050915cb6e3efbfde30e900ad717bf",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.2",
+                "phpstan/phpstan": "^2.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.18",
+                "mrpunyapal/rector-pest": "^0.2.0",
+                "nunomaduro/pao": "^0.1.4",
+                "pestphp/pest": "^3.0 || ^4.0 || ^5.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "rector/rector": "^2.0"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PestStan\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan extension for Pest PHP testing framework",
+            "keywords": [
+                "PHPStan",
+                "pest",
+                "static-analysis",
+                "testing"
+            ],
+            "support": {
+                "issues": "https://github.com/MrPunyapal/PestStan/issues",
+                "source": "https://github.com/MrPunyapal/PestStan/tree/0.2.10"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/mrpunyapal",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-05-10T16:55:11+00:00"
         },
         {
             "name": "myclabs/deep-copy",
