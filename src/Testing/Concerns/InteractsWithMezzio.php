@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Builtnoble\Mezzio\Inertia\Testing\Concerns;
 
+use Closure;
 use Composer\Autoload\ClassLoader;
+use Laminas\Diactoros\ConfigProvider as DiactorosConfigProvider;
+use Laminas\HttpHandlerRunner\ConfigProvider as HttpHandlerRunnerConfigProvider;
+use Laminas\Router\ConfigProvider as LaminasRouterConfigProvider;
 use Mezzio\Application;
+use Mezzio\ConfigProvider as MezzioConfigProvider;
 use Mezzio\MiddlewareFactory;
+use Mezzio\Router\ConfigProvider as MezzioRouterConfigProvider;
+use Mezzio\Router\LaminasRouter\ConfigProvider as LaminasRouterAdapterConfigProvider;
 use Psr\Container\ContainerInterface;
-use ReflectionClass;
-use RuntimeException;
 
 trait InteractsWithMezzio
 {
@@ -19,6 +24,27 @@ trait InteractsWithMezzio
 
     protected string $basePath;
 
+    /**
+     * @var list<callable|class-string>
+     *
+     * @phpstan-var list<callable|class-string>
+     */
+    protected array $configProviders = [
+        LaminasRouterAdapterConfigProvider::class,
+        LaminasRouterConfigProvider::class,
+        HttpHandlerRunnerConfigProvider::class,
+        MezzioConfigProvider::class,
+        MezzioRouterConfigProvider::class,
+        DiactorosConfigProvider::class,
+    ];
+
+    /**
+     * @var (\Closure(Application, MiddlewareFactory, ContainerInterface): void)|null
+     *
+     * @phpstan-var (\Closure(Application, MiddlewareFactory, ContainerInterface): void)|null
+     */
+    protected ?\Closure $routeDefinition = null;
+
     protected function getApp(): Application
     {
         return $this->app;
@@ -27,6 +53,40 @@ trait InteractsWithMezzio
     protected function getContainer(): ContainerInterface
     {
         return $this->container;
+    }
+
+    /**
+     * @return list<callable|class-string>
+     *
+     * @phpstan-return list<callable|class-string>
+     */
+    public function getConfigProviders(): array
+    {
+        return $this->configProviders;
+    }
+
+    /**
+     * @param list<callable|class-string> $configProviders
+     *
+     * @phpstan-param list<callable|class-string> $configProviders
+     */
+    public function setConfigProviders(array $configProviders): self
+    {
+        $this->configProviders = $configProviders;
+
+        return $this;
+    }
+
+    /**
+     * @param \Closure(Application, MiddlewareFactory, ContainerInterface): void $definition
+     *
+     * @phpstan-param Closure(Application, MiddlewareFactory, ContainerInterface): void $definition
+     */
+    public function defineRoutes(\Closure $definition): self
+    {
+        $this->routeDefinition = $definition;
+
+        return $this;
     }
 
     public function setApp(Application $app): self
@@ -60,6 +120,10 @@ trait InteractsWithMezzio
         (require normalizePath($this->basePath . '/config/pipeline.php'))($this->app, $factory, $this->container);
         (require normalizePath($this->basePath . '/config/routes.php'))($this->app, $factory, $this->container);
 
+        if ($this->routeDefinition !== null) {
+            ($this->routeDefinition)($this->app, $factory, $this->container);
+        }
+
         return $this;
     }
 
@@ -73,11 +137,11 @@ trait InteractsWithMezzio
 
         // Try to find the autoloader, via Reflection, for consumers of this
         // package.
-        $reflection = new ReflectionClass(ClassLoader::class);
+        $reflection = new \ReflectionClass(ClassLoader::class);
         $filename = $reflection->getFileName();
 
         if (! is_string($filename)) {
-            throw new RuntimeException('Cannot determine Reflection file location.');
+            throw new \RuntimeException('Cannot determine Reflection file location.');
         }
 
         $vendor = dirname(dirname($filename));
