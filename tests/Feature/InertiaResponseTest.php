@@ -5,9 +5,9 @@ declare(strict_types=1);
 use Builtnoble\Mezzio\Inertia\Middleware\InertiaMiddleware;
 use Builtnoble\VitePHP\ViteInterface;
 use MaskuLabs\InertiaPsr\InertiaInterface;
-use MaskuLabs\InertiaPsr\Support\Header;
 use Mezzio\Application;
 use Mezzio\MiddlewareFactory;
+use Mezzio\Session\RetrieveSession;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -16,6 +16,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use function Builtnoble\Mezzio\Inertia\Testing\Pest\decodeInertiaPage;
 use function Builtnoble\Mezzio\Inertia\Testing\Pest\get;
 use function Builtnoble\Mezzio\Inertia\Testing\Pest\post;
+use function Builtnoble\Mezzio\Inertia\Testing\Pest\withInertiaVersion;
+use function Builtnoble\Mezzio\Inertia\Testing\Pest\withSession;
 
 beforeEach(function () {
     $this->getContainer()->setService(
@@ -70,6 +72,18 @@ beforeEach(function () {
                 return $inertia->redirect('/profile');
             },
         ], 'redirect');
+
+        $app->get('/session', [
+            InertiaMiddleware::class,
+            static function (ServerRequestInterface $request): ResponseInterface {
+                /** @var InertiaInterface $inertia */
+                $inertia = $request->getAttribute(InertiaInterface::class);
+
+                $userId = RetrieveSession::fromRequest($request)->get('user_id');
+
+                return $inertia->render('Session', ['userId' => $userId]);
+            },
+        ], 'session');
     })->bootApp();
 });
 
@@ -114,9 +128,17 @@ it('decodes the Inertia page payload from a response', function () {
 });
 
 it('triggers a version-mismatch redirect when the request version differs from the server version', function () {
-    $response = get('/profile', [Header::Version->value => 'stale-version']);
+    $response = withInertiaVersion('stale-version')->get('/profile');
 
     expect($response)
         ->toBeInertiaConflict()
         ->and($response->getHeaderLine('X-Inertia-Location'))->toBe('/profile');
+});
+
+it('seeds session data via the fluent request builder', function () {
+    $response = withSession(['user_id' => 42])->get('/session');
+
+    expect($response)
+        ->toBeInertiaOk()
+        ->toHaveInertiaProps(['userId' => 42]);
 });
