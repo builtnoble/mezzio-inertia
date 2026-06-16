@@ -10,14 +10,45 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * @param array<string, string> $headers
  */
-function inertiaRequest(string $method, string $uri, array $headers = []): ServerRequestInterface
+function get(string $uri, array $headers = []): ResponseInterface
 {
-    return test()->inertiaRequest($method, $uri, $headers);
+    return test()->dispatch(test()->inertiaRequest('GET', $uri, $headers));
 }
 
-function dispatch(ServerRequestInterface $request): ResponseInterface
+/**
+ * @param array<string, mixed> $data
+ * @param array<string, string> $headers
+ */
+function post(string $uri, array $data = [], array $headers = []): ResponseInterface
 {
-    return test()->dispatch($request);
+    return test()->dispatch(test()->inertiaRequest('POST', $uri, $headers, $data));
+}
+
+/**
+ * @param array<string, mixed> $data
+ * @param array<string, string> $headers
+ */
+function put(string $uri, array $data = [], array $headers = []): ResponseInterface
+{
+    return test()->dispatch(test()->inertiaRequest('PUT', $uri, $headers, $data));
+}
+
+/**
+ * @param array<string, mixed> $data
+ * @param array<string, string> $headers
+ */
+function patch(string $uri, array $data = [], array $headers = []): ResponseInterface
+{
+    return test()->dispatch(test()->inertiaRequest('PATCH', $uri, $headers, $data));
+}
+
+/**
+ * @param array<string, mixed> $data
+ * @param array<string, string> $headers
+ */
+function delete(string $uri, array $data = [], array $headers = []): ResponseInterface
+{
+    return test()->dispatch(test()->inertiaRequest('DELETE', $uri, $headers, $data));
 }
 
 /**

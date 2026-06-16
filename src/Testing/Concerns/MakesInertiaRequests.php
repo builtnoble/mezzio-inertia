@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Builtnoble\Mezzio\Inertia\Testing\Concerns;
 
 use Laminas\Diactoros\ServerRequest;
+use Laminas\Diactoros\StreamFactory;
 use MaskuLabs\InertiaPsr\Support\Header;
 use Mezzio\Session\Session;
 use Mezzio\Session\SessionMiddleware;
@@ -20,8 +21,9 @@ trait MakesInertiaRequests
 
     /**
      * @param array<string, string> $headers
+     * @param array<string, mixed> $data
      */
-    public function inertiaRequest(string $method, string $uri, array $headers = []): ServerRequestInterface
+    public function inertiaRequest(string $method, string $uri, array $headers = [], array $data = []): ServerRequestInterface
     {
         $request = new ServerRequest(uri: $uri, method: $method);
 
@@ -30,6 +32,13 @@ trait MakesInertiaRequests
         }
 
         $request = $request->withHeader(Header::Inertia->value, 'true');
+
+        if ($data !== []) {
+            $request = $request
+                ->withHeader('Content-Type', 'application/json')
+                ->withBody(new StreamFactory()->createStream(json_encode($data, JSON_THROW_ON_ERROR)))
+                ->withParsedBody($data);
+        }
 
         return $this->withSession($request);
     }
