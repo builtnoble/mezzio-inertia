@@ -8,6 +8,7 @@ use Builtnoble\Mezzio\Inertia\Flash\SessionFlashAdapter;
 use Builtnoble\Mezzio\Inertia\Session\MezzioSessionAdapter;
 use MaskuLabs\InertiaPsr\Flash\Flash;
 use MaskuLabs\InertiaPsr\Inertia;
+use MaskuLabs\InertiaPsr\InertiaInterface;
 use MaskuLabs\InertiaPsr\Middleware\Middleware;
 use MaskuLabs\InertiaPsr\Property\ProvidesInertiaPropertiesInterface;
 use MaskuLabs\InertiaPsr\Response\ResponseFactory;
@@ -83,6 +84,8 @@ final class InertiaMiddleware implements MiddlewareInterface
                 $inertia->share((string) $key, $value);
             }
         }
+
+        $request = $request->withAttribute(InertiaInterface::class, $inertia);
 
         return new Middleware(
             $inertia,
