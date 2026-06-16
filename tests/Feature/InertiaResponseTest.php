@@ -12,6 +12,9 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function Builtnoble\Mezzio\Inertia\Testing\Pest\dispatch;
+use function Builtnoble\Mezzio\Inertia\Testing\Pest\inertiaRequest;
+
 it('renders an Inertia component through the full Mezzio pipeline', function () {
     $this->getContainer()->setService(
         TemplateRendererInterface::class,
@@ -34,10 +37,11 @@ it('renders an Inertia component through the full Mezzio pipeline', function () 
         ], 'profile');
     })->bootApp();
 
-    $response = $this->dispatch($this->inertiaRequest('GET', '/profile'));
+    $response = dispatch(inertiaRequest('GET', '/profile'));
 
     expect($response->getStatusCode())->toBe(200);
 
-    $this->assertInertiaComponent($response, 'Profile');
-    $this->assertInertiaProps($response, ['name' => 'Amanda']);
+    expect($response)
+        ->toBeInertiaComponent('Profile')
+        ->toHaveInertiaProps(['name' => 'Amanda']);
 });
