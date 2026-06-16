@@ -12,10 +12,12 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function Builtnoble\Mezzio\Inertia\Testing\Pest\decodeInertiaPage;
 use function Builtnoble\Mezzio\Inertia\Testing\Pest\dispatch;
 use function Builtnoble\Mezzio\Inertia\Testing\Pest\inertiaRequest;
+use function Builtnoble\Mezzio\Inertia\Testing\Pest\withInertiaVersion;
 
-it('renders an Inertia component through the full Mezzio pipeline', function () {
+beforeEach(function () {
     $this->getContainer()->setService(
         TemplateRendererInterface::class,
         $this->createStub(TemplateRendererInterface::class),
@@ -36,7 +38,9 @@ it('renders an Inertia component through the full Mezzio pipeline', function () 
             },
         ], 'profile');
     })->bootApp();
+});
 
+it('renders an Inertia component through the full Mezzio pipeline', function () {
     $response = dispatch(inertiaRequest('GET', '/profile'));
 
     expect($response->getStatusCode())->toBe(200);
@@ -44,4 +48,23 @@ it('renders an Inertia component through the full Mezzio pipeline', function () 
     expect($response)
         ->toBeInertiaComponent('Profile')
         ->toHaveInertiaProps(['name' => 'Amanda']);
+});
+
+it('decodes the Inertia page payload from a response', function () {
+    $response = dispatch(inertiaRequest('GET', '/profile'));
+
+    $page = decodeInertiaPage($response);
+
+    expect($page)
+        ->toHaveKey('component', 'Profile')
+        ->and($page['props'])->toHaveKey('name', 'Amanda');
+});
+
+it('triggers a version-mismatch redirect when withInertiaVersion differs from the server version', function () {
+    $request = withInertiaVersion(inertiaRequest('GET', '/profile'), 'stale-version');
+
+    $response = dispatch($request);
+
+    expect($response->getStatusCode())->toBe(409)
+        ->and($response->getHeaderLine('X-Inertia-Location'))->toBe('/profile');
 });
