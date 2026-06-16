@@ -27,3 +27,18 @@ function withSession(ServerRequestInterface $request, array $data = []): ServerR
 {
     return test()->withSession($request, $data);
 }
+
+function withInertiaVersion(ServerRequestInterface $request, string $version): ServerRequestInterface
+{
+    return test()->withInertiaVersion($request, $version);
+}
+
+/**
+ * @return array{component: string, props: array<string, mixed>, url: string, version?: string}
+ *
+ * @phpstan-return array{component: string, props: array<string, mixed>, url: string, version?: string}
+ */
+function decodeInertiaPage(ResponseInterface $response): array
+{
+    return test()->decodeInertiaPage($response);
+}
