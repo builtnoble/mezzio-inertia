@@ -21,6 +21,38 @@ function getTestableResponse(Expectation $expectation): ResponseInterface
     return $response;
 };
 
+expect()->extend('toBeInertiaOk', function (): Expectation {
+    $response = getTestableResponse($this);
+
+    test()->assertInertiaOk($response);
+
+    return $this;
+});
+
+expect()->extend('toBeInertiaFound', function (): Expectation {
+    $response = getTestableResponse($this);
+
+    test()->assertInertiaFound($response);
+
+    return $this;
+});
+
+expect()->extend('toBeInertiaSeeOther', function (): Expectation {
+    $response = getTestableResponse($this);
+
+    test()->assertInertiaSeeOther($response);
+
+    return $this;
+});
+
+expect()->extend('toBeInertiaConflict', function (): Expectation {
+    $response = getTestableResponse($this);
+
+    test()->assertInertiaConflict($response);
+
+    return $this;
+});
+
 expect()->extend('toBeInertiaComponent', function (string $component): Expectation {
     $response = getTestableResponse($this);
 

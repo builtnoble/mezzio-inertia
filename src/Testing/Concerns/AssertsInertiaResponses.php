@@ -30,6 +30,45 @@ trait AssertsInertiaResponses
         return $page;
     }
 
+    /**
+     * Assert a 200 "OK" status code, Inertia's status for a standard,
+     * successful page visit.
+     */
+    public function assertInertiaOk(ResponseInterface $response): void
+    {
+        static::assertSame(200, $response->getStatusCode());
+    }
+
+    /**
+     * Assert a 302 "Found" status code, the default status Inertia uses
+     * for redirects (e.g. Inertia::back()).
+     */
+    public function assertInertiaFound(ResponseInterface $response): void
+    {
+        static::assertSame(302, $response->getStatusCode());
+    }
+
+    /**
+     * Assert a 303 "See Other" status code. Inertia upgrades redirects
+     * to PUT/PATCH/DELETE requests to this status so the client follows
+     * up with a GET request instead of repeating the original method,
+     * and Inertia::redirect() uses it directly.
+     */
+    public function assertInertiaSeeOther(ResponseInterface $response): void
+    {
+        static::assertSame(303, $response->getStatusCode());
+    }
+
+    /**
+     * Assert a 409 "Conflict" status code, the status Inertia uses to
+     * signal an asset version mismatch so the client performs a full
+     * page visit instead of an XHR-based one.
+     */
+    public function assertInertiaConflict(ResponseInterface $response): void
+    {
+        static::assertSame(409, $response->getStatusCode());
+    }
+
     public function assertInertiaComponent(ResponseInterface $response, string $component): void
     {
         $page = $this->decodeInertiaPage($response);
