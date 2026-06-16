@@ -25,8 +25,7 @@ abstract class TestCase extends Testing\TestCase
         ]);
 
         $this->setBasePath(vfsStream::url('root'))
-            ->setContainer($this->buildContainer())
-            ->bootApp();
+            ->setContainer($this->buildContainer());
     }
 
     protected function tearDown(): void
