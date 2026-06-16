@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Builtnoble\Mezzio\Inertia\Testing\Concerns;
 
+use Builtnoble\Mezzio\Inertia\Testing\PendingInertiaRequest;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\StreamFactory;
 use MaskuLabs\InertiaPsr\Support\Header;
@@ -17,6 +18,14 @@ trait MakesInertiaRequests
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {
         return $this->getApp()->handle($request);
+    }
+
+    /**
+     * Starts a fluent, chainable request: request()->withSession([...])->get($uri).
+     */
+    public function request(): PendingInertiaRequest
+    {
+        return new PendingInertiaRequest($this);
     }
 
     /**

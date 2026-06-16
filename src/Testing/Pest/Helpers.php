@@ -4,15 +4,44 @@ declare(strict_types=1);
 
 namespace Builtnoble\Mezzio\Inertia\Testing\Pest;
 
+use Builtnoble\Mezzio\Inertia\Testing\PendingInertiaRequest;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+
+/**
+ * Starts a fluent, chainable request: request()->withSession([...])->get($uri).
+ */
+function request(): PendingInertiaRequest
+{
+    return test()->request();
+}
+
+/**
+ * @param array<string, string> $headers
+ */
+function withHeaders(array $headers): PendingInertiaRequest
+{
+    return test()->request()->withHeaders($headers);
+}
+
+/**
+ * @param array<string, mixed> $data
+ */
+function withSession(array $data): PendingInertiaRequest
+{
+    return test()->request()->withSession($data);
+}
+
+function withInertiaVersion(string $version): PendingInertiaRequest
+{
+    return test()->request()->withInertiaVersion($version);
+}
 
 /**
  * @param array<string, string> $headers
  */
 function get(string $uri, array $headers = []): ResponseInterface
 {
-    return test()->dispatch(test()->inertiaRequest('GET', $uri, $headers));
+    return test()->request()->withHeaders($headers)->get($uri);
 }
 
 /**
@@ -21,7 +50,7 @@ function get(string $uri, array $headers = []): ResponseInterface
  */
 function post(string $uri, array $data = [], array $headers = []): ResponseInterface
 {
-    return test()->dispatch(test()->inertiaRequest('POST', $uri, $headers, $data));
+    return test()->request()->withHeaders($headers)->post($uri, $data);
 }
 
 /**
@@ -30,7 +59,7 @@ function post(string $uri, array $data = [], array $headers = []): ResponseInter
  */
 function put(string $uri, array $data = [], array $headers = []): ResponseInterface
 {
-    return test()->dispatch(test()->inertiaRequest('PUT', $uri, $headers, $data));
+    return test()->request()->withHeaders($headers)->put($uri, $data);
 }
 
 /**
@@ -39,7 +68,7 @@ function put(string $uri, array $data = [], array $headers = []): ResponseInterf
  */
 function patch(string $uri, array $data = [], array $headers = []): ResponseInterface
 {
-    return test()->dispatch(test()->inertiaRequest('PATCH', $uri, $headers, $data));
+    return test()->request()->withHeaders($headers)->patch($uri, $data);
 }
 
 /**
@@ -48,20 +77,7 @@ function patch(string $uri, array $data = [], array $headers = []): ResponseInte
  */
 function delete(string $uri, array $data = [], array $headers = []): ResponseInterface
 {
-    return test()->dispatch(test()->inertiaRequest('DELETE', $uri, $headers, $data));
-}
-
-/**
- * @param array<string, mixed> $data
- */
-function withSession(ServerRequestInterface $request, array $data = []): ServerRequestInterface
-{
-    return test()->withSession($request, $data);
-}
-
-function withInertiaVersion(ServerRequestInterface $request, string $version): ServerRequestInterface
-{
-    return test()->withInertiaVersion($request, $version);
+    return test()->request()->withHeaders($headers)->delete($uri, $data);
 }
 
 /**
