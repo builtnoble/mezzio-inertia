@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Builtnoble\Mezzio\Inertia\Middleware\InertiaMiddleware;
 use Builtnoble\VitePHP\ViteInterface;
 use MaskuLabs\InertiaPsr\InertiaInterface;
+use MaskuLabs\InertiaPsr\Support\Header;
 use Mezzio\Application;
 use Mezzio\MiddlewareFactory;
 use Mezzio\Template\TemplateRendererInterface;
@@ -13,9 +14,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function Builtnoble\Mezzio\Inertia\Testing\Pest\decodeInertiaPage;
-use function Builtnoble\Mezzio\Inertia\Testing\Pest\dispatch;
-use function Builtnoble\Mezzio\Inertia\Testing\Pest\inertiaRequest;
-use function Builtnoble\Mezzio\Inertia\Testing\Pest\withInertiaVersion;
+use function Builtnoble\Mezzio\Inertia\Testing\Pest\get;
+use function Builtnoble\Mezzio\Inertia\Testing\Pest\post;
 
 beforeEach(function () {
     $this->getContainer()->setService(
@@ -37,21 +37,74 @@ beforeEach(function () {
                 return $inertia->render('Profile', ['name' => 'Amanda']);
             },
         ], 'profile');
+
+        $app->post('/contact', [
+            InertiaMiddleware::class,
+            static function (ServerRequestInterface $request): ResponseInterface {
+                /** @var InertiaInterface $inertia */
+                $inertia = $request->getAttribute(InertiaInterface::class);
+
+                /** @var array<string, mixed> $body */
+                $body = (array) $request->getParsedBody();
+
+                return $inertia->render('Contact', $body);
+            },
+        ], 'contact');
+
+        $app->get('/back', [
+            InertiaMiddleware::class,
+            static function (ServerRequestInterface $request): ResponseInterface {
+                /** @var InertiaInterface $inertia */
+                $inertia = $request->getAttribute(InertiaInterface::class);
+
+                return $inertia->back();
+            },
+        ], 'back');
+
+        $app->get('/redirect', [
+            InertiaMiddleware::class,
+            static function (ServerRequestInterface $request): ResponseInterface {
+                /** @var InertiaInterface $inertia */
+                $inertia = $request->getAttribute(InertiaInterface::class);
+
+                return $inertia->redirect('/profile');
+            },
+        ], 'redirect');
     })->bootApp();
 });
 
 it('renders an Inertia component through the full Mezzio pipeline', function () {
-    $response = dispatch(inertiaRequest('GET', '/profile'));
-
-    expect($response->getStatusCode())->toBe(200);
+    $response = get('/profile');
 
     expect($response)
+        ->toBeInertiaOk()
         ->toBeInertiaComponent('Profile')
         ->toHaveInertiaProps(['name' => 'Amanda']);
 });
 
+it('sends JSON-encoded data on POST requests', function () {
+    $response = post('/contact', ['email' => 'amanda@example.com']);
+
+    expect($response)
+        ->toBeInertiaOk()
+        ->toBeInertiaComponent('Contact')
+        ->toHaveInertiaProps(['email' => 'amanda@example.com']);
+});
+
+it('asserts a 302 Found status code for Inertia::back()', function () {
+    $response = get('/back');
+
+    expect($response)->toBeInertiaFound();
+});
+
+it('asserts a 303 See Other status code for Inertia::redirect()', function () {
+    $response = get('/redirect');
+
+    expect($response)->toBeInertiaSeeOther();
+});
+
 it('decodes the Inertia page payload from a response', function () {
-    $response = dispatch(inertiaRequest('GET', '/profile'));
+    $response = get('/profile');
 
     $page = decodeInertiaPage($response);
 
@@ -60,11 +113,10 @@ it('decodes the Inertia page payload from a response', function () {
         ->and($page['props'])->toHaveKey('name', 'Amanda');
 });
 
-it('triggers a version-mismatch redirect when withInertiaVersion differs from the server version', function () {
-    $request = withInertiaVersion(inertiaRequest('GET', '/profile'), 'stale-version');
+it('triggers a version-mismatch redirect when the request version differs from the server version', function () {
+    $response = get('/profile', [Header::Version->value => 'stale-version']);
 
-    $response = dispatch($request);
-
-    expect($response->getStatusCode())->toBe(409)
+    expect($response)
+        ->toBeInertiaConflict()
         ->and($response->getHeaderLine('X-Inertia-Location'))->toBe('/profile');
 });
