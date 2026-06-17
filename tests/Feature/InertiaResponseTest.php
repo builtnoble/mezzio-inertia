@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Builtnoble\Mezzio\Inertia\Middleware\InertiaMiddleware;
+use Builtnoble\Mezzio\Inertia\Response\InertiaResponse;
 use Builtnoble\VitePHP\ViteInterface;
 use MaskuLabs\InertiaPsr\InertiaInterface;
 use Mezzio\Application;
@@ -84,6 +85,16 @@ beforeEach(function () {
                 return $inertia->render('Session', ['userId' => $userId]);
             },
         ], 'session');
+
+        $app->get('/dashboard', [
+            InertiaMiddleware::class,
+            static fn (ServerRequestInterface $request): ResponseInterface => new InertiaResponse($request, 'Dashboard', ['name' => 'Amanda']),
+        ], 'dashboard');
+
+        $app->get('/settings', [
+            InertiaMiddleware::class,
+            static fn (ServerRequestInterface $request): ResponseInterface => inertia($request, 'Settings', ['name' => 'Amanda']),
+        ], 'settings');
     })->bootApp();
 });
 
@@ -141,4 +152,22 @@ it('seeds session data via the fluent request builder', function () {
     expect($response)
         ->toBeInertiaOk()
         ->toHaveInertiaProps(['userId' => 42]);
+});
+
+it('renders an Inertia component via the new InertiaResponse() handler convention', function () {
+    $response = get('/dashboard');
+
+    expect($response)
+        ->toBeInertiaOk()
+        ->toBeInertiaComponent('Dashboard')
+        ->toHaveInertiaProps(['name' => 'Amanda']);
+});
+
+it('renders an Inertia component via the inertia() helper function', function () {
+    $response = get('/settings');
+
+    expect($response)
+        ->toBeInertiaOk()
+        ->toBeInertiaComponent('Settings')
+        ->toHaveInertiaProps(['name' => 'Amanda']);
 });
