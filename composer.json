@@ -4,6 +4,16 @@
     "description": "Inertia.js adapter for Mezzio.",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "inertia",
+        "inertiajs",
+        "mezzio",
+        "laminas",
+        "psr-15",
+        "middleware",
+        "adapter",
+        "php"
+    ],
     "authors": [
         {
             "name": "Amanda Romero",
