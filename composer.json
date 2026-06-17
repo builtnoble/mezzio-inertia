@@ -3,6 +3,7 @@
     "name": "builtnoble/mezzio-inertia",
     "description": "Inertia.js adapter for Mezzio.",
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Amanda Romero",
