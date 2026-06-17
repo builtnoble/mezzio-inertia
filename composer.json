@@ -47,8 +47,7 @@
             "Builtnoble\\Mezzio\\Inertia\\": "src/"
         },
         "files": [
-            "src/helpers.php",
-            "src/Testing/Pest/Autoload.php"
+            "src/helpers.php"
         ]
     },
     "autoload-dev": {
@@ -66,6 +65,11 @@
     "extra": {
         "laminas": {
             "config-provider": "Builtnoble\\Mezzio\\Inertia\\ConfigProvider"
+        },
+        "pest": {
+            "plugins": [
+                "Builtnoble\\Mezzio\\Inertia\\Testing\\Pest\\Plugin"
+            ]
         }
     },
     "minimum-stability": "dev",
