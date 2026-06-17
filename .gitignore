@@ -16,3 +16,5 @@
 /auth.json
 /node_modules
 /vendor
+.phpactor.json
+phpactor.schema.json
